@@ -1,15 +1,21 @@
 #!/usr/bin/python3
-""" File Storage For HBNB """
+"""
+This module defines a class
+"""
 import json
 
 
 class FileStorage:
-    """This class manages storage in JSON"""
+    """
+    hbnb models in JSON format
+    """
     __file_path = 'file.json'
     __objects = {}
 
     def all(self, cls=None):
-        """ Returns a dictionary of models currently """
+        """
+        currently in storage
+        """
         if cls is None:
             return self.__objects
         cls_name = cls.__name__
@@ -20,13 +26,17 @@ class FileStorage:
         return dct
 
     def new(self, obj):
-        """ Adds new object """
+        """
+        Adds new object
+        """
         self.__objects.update(
             {obj.to_dict()['__class__'] + '.' + obj.id: obj}
             )
 
     def save(self):
-        """ Saves storage dictionary """
+        """
+        Saves storage dic
+        """
         with open(self.__file_path, 'w') as f:
             temp = {}
             temp.update(self.__objects)
@@ -35,7 +45,9 @@ class FileStorage:
             json.dump(temp, f)
 
     def reload(self):
-        """ Loads storage dictionary """
+        """
+        Loads storage dic
+        """
         from models.base_model import BaseModel
         from models.user import User
         from models.place import Place
@@ -59,7 +71,9 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """deletes"""
+        """
+        object obj from the attribute
+        """
         if obj is None:
             return
         obj_key = obj.to_dict()['__class__'] + '.' + obj.id
@@ -67,5 +81,7 @@ class FileStorage:
             del self.__objects[obj_key]
 
     def close(self):
-        """Close"""
+        """
+        Call reload
+        """
         self.reload()
